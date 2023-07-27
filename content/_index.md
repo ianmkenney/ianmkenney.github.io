@@ -1,8 +1,6 @@
 +++
-title= "ianmkenney homepage"
-template = "index.html"
 +++
 
-# Index page
+# Ian M Kenney
 
-Ian M. Kenney's index page
+## It turns out you don't want to have any templates...
