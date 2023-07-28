@@ -22,7 +22,7 @@ jobs:
         env:
           BUILD_DIR: .
           PAGES_BRANCH: gh-pages
-          TOKEN: ${{ secrets.TOKEN }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create empty templates dir
         run: |
