@@ -20,7 +20,7 @@ jobs:
         uses: shalzz/zola-deploy-action@v0.17.2
         if: github.ref == 'refs/heads/main'
         env:
-          BUILD_DIR: public
+          BUILD_DIR: .
           PAGES_BRANCH: gh-pages
           TOKEN: ${{ secrets.TOKEN }}
 
@@ -28,5 +28,5 @@ jobs:
         uses: shalzz/zola-deploy-action@v0.17.2
         if: github.event_name == 'pull_request'
         env:
-          BUILD_DIR: public
+          BUILD_DIR: .
           BUILD_ONLY: true
