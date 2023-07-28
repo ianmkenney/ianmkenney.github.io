@@ -34,3 +34,9 @@ jobs:
         env:
           BUILD_DIR: .
           BUILD_ONLY: true
+
+      - name: actions/upload-artifact@v3
+        if: github.event_name == 'pull_request'
+        with:
+          name: pr_build
+          path: ./public/
