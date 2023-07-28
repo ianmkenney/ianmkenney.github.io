@@ -1,5 +1,13 @@
-on: push
 name: Build and deploy GH pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +20,7 @@ jobs:
         uses: shalzz/zola-deploy-action@v0.17.2
         if: github.ref == 'refs/heads/main'
         env:
-          BUILD_DIR: .
+          BUILD_DIR: public
           PAGES_BRANCH: gh-pages
           TOKEN: ${{ secrets.TOKEN }}
 
@@ -20,5 +28,5 @@ jobs:
         uses: shalzz/zola-deploy-action@v0.17.2
         if: github.event_name == 'pull_request'
         env:
-          BUILD_DIR: .
+          BUILD_DIR: public
           BUILD_ONLY: true
