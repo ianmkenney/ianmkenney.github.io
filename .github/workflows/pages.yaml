@@ -24,6 +24,10 @@ jobs:
           PAGES_BRANCH: gh-pages
           TOKEN: ${{ secrets.TOKEN }}
 
+      - name: Create empty templates dir
+        run: |
+          mkdir templates/
+      
       - name: build only
         uses: shalzz/zola-deploy-action@v0.17.2
         if: github.event_name == 'pull_request'
