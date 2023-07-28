@@ -16,6 +16,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3.0.0
 
+      - name: Create empty templates dir
+        run: |
+          mkdir templates/
+
       - name: build and deploy
         uses: shalzz/zola-deploy-action@v0.17.2
         if: github.ref == 'refs/heads/main'
@@ -23,10 +27,6 @@ jobs:
           BUILD_DIR: .
           PAGES_BRANCH: gh-pages
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create empty templates dir
-        run: |
-          mkdir templates/
       
       - name: build only
         uses: shalzz/zola-deploy-action@v0.17.2
