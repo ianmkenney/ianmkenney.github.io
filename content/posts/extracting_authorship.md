@@ -52,6 +52,105 @@ chrispfae <XYZ@ABC.COM>|2023-02-24 23:16:15 +0100
 The repeated authors in this case used different email addresses between their commits.
 This list of authors can then be used to populate an `AUTHORS.md` file like the one in [mdaencore][mdaencoreauthors].
 
+Occasionally, authors names won't be resolved properly, such as `zeman`, `shfrz` and `chrispfae`.
+At this point, you can try and get more information about these users by looking outside of just these files.
+Most of this information is probably already in the `AUTHORS.md` from the original repository, but depending on their GitHub username it may not be clear who they actually are.
+Using `shfrz` as an example, we can collect all of the commits made by this author using
+
+```
+git log --author=shfrz
+```
+
+which yields a commit history of
+
+```
+      commit 9a5467db55584eebbbe068bac0ba273f33713a6c
+Author: shfrz <39633713+shfrz@users.noreply.github.com>
+Date:   Mon Mar 30 04:14:36 2020 +0530
+
+    Updated mdamath (#2634)
+
+    FIxes issue #2632
+
+    ## Changes made in this PR
+      - When lowerbound roundoff errors occur in `mdamath.angle` (i.e. the internal value of `x` becomes < -1.0), the returned angle is now `np.pi` rather than `-np.pi`.
+      - The `if`/`else` construct for roundoff errors has now been switched to an `np.clip()` call.
+
+    ## Files changed
+      - MDAnalysis/lib/mdamath.py
+      - MDAnalysisTests/lib/test_util.py
+      - CHANGELOG
+
+commit a78307f0d99b7310707ef015cab2908ce4770a4e
+Author: shfrz <39633713+shfrz@users.noreply.github.com>
+Date:   Thu Mar 19 14:56:59 2020 +0530
+
+    Remove details from ClusterMethods [Fixes #2575] (#2620)
+
+    Fixes issue #2575
+
+    ## Work done in this PR:
+
+    Here the always-empty `details` dictionary which used to be returned by ClusterMethods has been removed.
+
+    ## Files changed
+
+      - ClusterMethods.py (removed details).
+      - test_encore.py (removed details).
+      - cluster.py (removed details).
+      - AUTHORS and CHANGELOG updated accordingly.
+
+commit bc2f1a54695b4fc9256a2b8d500fd65028e34110
+Author: shfrz <39633713+shfrz@users.noreply.github.com>
+Date:   Tue Mar 3 06:42:02 2020 +0530
+
+    Updated Readme (#2552)
+
+    Fixed typos in README.rst.
+```
+
+From this we can see that AUTHORS was updated by this user in commit `a78307f0d99b7310707ef015cab2908ce4770a4e`, which likely has the information we would actually include.
+The fastest way to show what changes were made is by using the command
+
+```
+git show a78307f0d99b7310707ef015cab2908ce4770a4e    
+```
+
+which returns
+
+```
+commit a78307f0d99b7310707ef015cab2908ce4770a4e
+Author: shfrz <39633713+shfrz@users.noreply.github.com>
+Date:   Thu Mar 19 14:56:59 2020 +0530
+
+    Remove details from ClusterMethods [Fixes #2575] (#2620)
+
+    Fixes issue #2575
+
+    ## Work done in this PR:
+
+    Here the always-empty `details` dictionary which used to be returned by ClusterMethods has been removed.
+
+    ## Files changed
+
+      - ClusterMethods.py (removed details).
+      - test_encore.py (removed details).
+      - cluster.py (removed details).
+      - AUTHORS and CHANGELOG updated accordingly.
+
+diff --git a/package/AUTHORS b/package/AUTHORS
+index af90aaba3..a83cea075 100644
+--- a/package/AUTHORS
++++ b/package/AUTHORS
+@@ -138,6 +138,7 @@ Chronological list of authors
+   - Yuxuan Zhuang
+   - Abhishek Shandilya
+   - Morgan L. Nance
++  - Faraaz Shah    
+```
+
+From the last line here, we were able to quickly confirm their identity, with particular emphasis on the way they chose to share it.
+
 [git]: https://git-scm.com/
 [ENCORE]: https://docs.mdanalysis.org/2.5.0/documentation_pages/analysis/encore.html
 [mdaencore]: https://github.com/MDAnalysis/mdaencore
