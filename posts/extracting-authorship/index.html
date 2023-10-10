@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  <link href='&#x2F;icons&#x2F;site.webmanifest' rel="manifest" />
+  
+  
+  <link color="#5bbad5" href='&#x2F;icons&#x2F;safari-pinned-tab.svg' rel="mask-icon" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-16x16.png' rel="icon" sizes="16x16" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-32x32.png' rel="icon" sizes="32x32" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;apple-touch-icon.png' rel="apple-touch-icon" sizes="180x180" />
+  
+
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.1/css/academicons.min.css" integrity="sha384-FIue+PI4SsI9XfHCz8dBLg33b0c1fMJgNU3X//L26FYbGnlSEfWmNT7zgWc2N9b6" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link href="https://ianmkenney.github.io/deep-thought.css" rel="stylesheet" />
+  
+  
+
+  <title>
+    
+ | Extracting authorship from a git repository
+
+  </title>
+
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" integrity="sha384-jiBVvJ8NGGj5n7kJaiWwWp9AjC+Yh8rhZY3GtAX8yU28azcLgoRo4oukO87g7zDT" crossorigin="anonymous"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+  
+  
+</head>
+
+<body class="has-background-white">
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-5 has-text-weight-bold" href="https:&#x2F;&#x2F;ianmkenney.github.io"></a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;ianmkenney.github.io&#x2F;">
+            Home
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;ianmkenney.github.io&#x2F;posts">
+            Posts
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;ianmkenney.github.io&#x2F;jokes">
+            Quality Jokes
+          </a>
+          
+          
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title">
+            Extracting authorship from a git repository
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="fas fa-user"></i>
+  </span>
+  <span>Ian Kenney published on</span>
+  <span class="icon">
+    <i class="far fa-calendar-alt"></i>
+  </span>
+  <span><time datetime="2023-08-03">August 03, 2023</time></span>
+</span>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="far fa-clock"></i>
+  </span>
+  <span>6 min,</span>
+  <span class="icon">
+    <i class="fas fa-pencil-alt"></i>
+  </span>
+  <span>1006 words</span>
+</span>
+
+            </div>
+            <div class="column">
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+            </div>
+          </div>
+          <div class="content mt-2">
+            <p>When moving code from one project to another, original authorship and attribution is easily lost in the process.
+Fortunately, if you're using <a href="https://git-scm.com/">git</a>, this information travels with the repository and anyone who had a part in publishing code is identifiable.
+In this post, we are concerned with identifying the authors who were involved with the <a href="https://docs.mdanalysis.org/2.5.0/documentation_pages/analysis/encore.html">ENCORE</a> analysis module in MDAnalysis and giving proper attribution in the new <a href="https://github.com/MDAnalysis/mdaencore">mdaencore</a> MDAKit <code>AUTHOR.md</code>.</p>
+<p>While GitHub <em>does</em> show the historical information we want, this is much easier accomplished on the command line with a local copy of the repository.
+From within the original code base, at the same level as the <code>encore</code> analysis module, we can run the <a href="https://git-scm.com/docs/git-log"><code>git log</code></a> command</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> git log</span><span style="color:#bf616a;"> --pretty</span><span>=&quot;</span><span style="color:#a3be8c;">%an &lt;%ae&gt;|%ai</span><span>&quot; encore/ \
+</span><span>      | </span><span style="color:#bf616a;">sort -k2 -t</span><span>&#39;</span><span style="color:#a3be8c;">|</span><span>&#39; \
+</span><span>      | </span><span style="color:#bf616a;">awk -F</span><span>&quot;</span><span style="color:#a3be8c;">|</span><span>&quot; &#39;</span><span style="color:#a3be8c;">!_[$1]++</span><span>&#39;
+</span></code></pre>
+<p>and then output the contents to a file or <code>less</code> for easier viewing.
+This will show all authors (<code>%an</code>) along with their email (<code>%ae</code>) and their commit times (<code>%ai</code>).
+We can separate the author information from the times with a <code>|</code>, so we can later <a href="https://man7.org/linux/man-pages/man1/sort.1.html"><code>sort</code></a> the output by date using the pipe symbol as a delimiter.
+This is then passed to <a href="https://tldp.org/LDP/abs/html/awk.html"><code>awk</code></a> to remove duplicate authors (based on their name and email combination) but maintaining chronological order.
+Unfortunately, as is common with git histories, many authors will have multiple email addresses and can show up multiple times in a history.
+In this case it's best to just pick the most reliable contact address.</p>
+<p>The output of the above command yields a list of authors (with real emails removed for scraping reasons)</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Matteo Tiberti &lt;XYZ@ABC.COM&gt;|2016-01-26 15:43:49 +0000
+</span><span>Tone Bengtsen &lt;XYZ@ABC.COM&gt;|2016-02-16 13:40:41 +0100
+</span><span>Wouter Boomsma &lt;XYZ@ABC.COM&gt;|2016-02-20 23:05:27 +0100
+</span><span>Wouter Boomsma &lt;XYZ@ABC.COM&gt;|2016-09-11 22:36:33 +0200
+</span><span>Richard Gowers &lt;XYZ@ABC.COM&gt;|2016-10-13 14:40:48 +0100
+</span><span>Oliver Beckstein &lt;XYZ@ABC.COM&gt;|2016-10-27 23:26:26 -0700
+</span><span>Wouter Boomsma &lt;XYZ@ABC.COM&gt;|2016-11-03 09:31:43 +0100
+</span><span>Max Linke &lt;XYZ@ABC.COM&gt;|2016-11-30 18:03:45 +0100
+</span><span>Max Linke &lt;XYZ@ABC.COM&gt;|2016-12-30 22:23:16 +0100
+</span><span>Jonathan Barnoud &lt;XYZ@ABC.COM&gt;|2017-01-12 22:14:39 +0100
+</span><span>richardjgowers &lt;XYZ@ABC.COM&gt;|2018-04-24 13:47:05 -0400
+</span><span>Tyler Reddy &lt;XYZ@ABC.COM&gt;|2018-05-02 15:32:20 -0600
+</span><span>zeman &lt;XYZ@ABC.COM&gt;|2018-06-11 11:28:45 +0200
+</span><span>Matthijs Tadema &lt;XYZ@ABC.COM&gt;|2019-07-16 14:56:55 +0200
+</span><span>Matthijs Tadema &lt;XYZ@ABC.COM&gt;|2019-07-17 14:12:10 +0200
+</span><span>Rocco Meli &lt;XYZ@ABC.COM&gt;|2020-02-15 08:39:12 +0000
+</span><span>shfrz &lt;XYZ@ABC.COM&gt;|2020-03-19 14:56:59 +0530
+</span><span>Irfan Alibay &lt;XYZ@ABC.COM&gt;|2020-06-15 08:13:38 +0100
+</span><span>Philip Loche &lt;XYZ@ABC.COM&gt;|2021-02-04 10:57:15 +0100
+</span><span>Paarth Thadani &lt;XYZ@ABC.COM&gt;|2021-04-07 20:06:14 +0530
+</span><span>Aya Alaa &lt;XYZ@ABC.COM&gt;|2022-03-23 17:06:12 +0200
+</span><span>Estefania Barreto-Ojeda &lt;XYZ@ABC.COM&gt;|2022-07-25 02:28:09 -0600
+</span><span>chrispfae &lt;XYZ@ABC.COM&gt;|2023-02-24 23:16:15 +0100
+</span></code></pre>
+<p>The repeated authors in this case used different email addresses between their commits.
+This list of authors can then be used to populate an <code>AUTHORS.md</code> file like the one in <a href="https://github.com/MDAnalysis/mdaencore/blob/main/AUTHORS.md">mdaencore</a>.</p>
+<p>Occasionally, authors names won't be resolved properly, such as <code>zeman</code>, <code>shfrz</code> and <code>chrispfae</code>.
+At this point, you can try and get more information about these users by looking outside of just these files.
+Most of this information is probably already in the <code>AUTHORS.md</code> from the original repository, but depending on their GitHub username it may not be clear who they actually are.
+Using <code>shfrz</code> as an example, we can collect all of the commits made by this author using</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>git log --author=shfrz
+</span></code></pre>
+<p>which yields a commit history of</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>      commit 9a5467db55584eebbbe068bac0ba273f33713a6c
+</span><span>Author: shfrz &lt;39633713+shfrz@users.noreply.github.com&gt;
+</span><span>Date:   Mon Mar 30 04:14:36 2020 +0530
+</span><span>
+</span><span>    Updated mdamath (#2634)
+</span><span>
+</span><span>    FIxes issue #2632
+</span><span>
+</span><span>    ## Changes made in this PR
+</span><span>      - When lowerbound roundoff errors occur in `mdamath.angle` (i.e. the internal value of `x` becomes &lt; -1.0), the returned angle is now `np.pi` rather than `-np.pi`.
+</span><span>      - The `if`/`else` construct for roundoff errors has now been switched to an `np.clip()` call.
+</span><span>
+</span><span>    ## Files changed
+</span><span>      - MDAnalysis/lib/mdamath.py
+</span><span>      - MDAnalysisTests/lib/test_util.py
+</span><span>      - CHANGELOG
+</span><span>
+</span><span>commit a78307f0d99b7310707ef015cab2908ce4770a4e
+</span><span>Author: shfrz &lt;39633713+shfrz@users.noreply.github.com&gt;
+</span><span>Date:   Thu Mar 19 14:56:59 2020 +0530
+</span><span>
+</span><span>    Remove details from ClusterMethods [Fixes #2575] (#2620)
+</span><span>
+</span><span>    Fixes issue #2575
+</span><span>
+</span><span>    ## Work done in this PR:
+</span><span>
+</span><span>    Here the always-empty `details` dictionary which used to be returned by ClusterMethods has been removed.
+</span><span>
+</span><span>    ## Files changed
+</span><span>
+</span><span>      - ClusterMethods.py (removed details).
+</span><span>      - test_encore.py (removed details).
+</span><span>      - cluster.py (removed details).
+</span><span>      - AUTHORS and CHANGELOG updated accordingly.
+</span><span>
+</span><span>commit bc2f1a54695b4fc9256a2b8d500fd65028e34110
+</span><span>Author: shfrz &lt;39633713+shfrz@users.noreply.github.com&gt;
+</span><span>Date:   Tue Mar 3 06:42:02 2020 +0530
+</span><span>
+</span><span>    Updated Readme (#2552)
+</span><span>
+</span><span>    Fixed typos in README.rst.
+</span></code></pre>
+<p>From this we can see that AUTHORS was updated by this user in commit <code>a78307f0d99b7310707ef015cab2908ce4770a4e</code>, which likely has the information we would actually include.
+The fastest way to show what changes were made is by using the command</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>git show a78307f0d99b7310707ef015cab2908ce4770a4e    
+</span></code></pre>
+<p>which returns</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>commit a78307f0d99b7310707ef015cab2908ce4770a4e
+</span><span>Author: shfrz &lt;39633713+shfrz@users.noreply.github.com&gt;
+</span><span>Date:   Thu Mar 19 14:56:59 2020 +0530
+</span><span>
+</span><span>    Remove details from ClusterMethods [Fixes #2575] (#2620)
+</span><span>
+</span><span>    Fixes issue #2575
+</span><span>
+</span><span>    ## Work done in this PR:
+</span><span>
+</span><span>    Here the always-empty `details` dictionary which used to be returned by ClusterMethods has been removed.
+</span><span>
+</span><span>    ## Files changed
+</span><span>
+</span><span>      - ClusterMethods.py (removed details).
+</span><span>      - test_encore.py (removed details).
+</span><span>      - cluster.py (removed details).
+</span><span>      - AUTHORS and CHANGELOG updated accordingly.
+</span><span>
+</span><span>diff --git a/package/AUTHORS b/package/AUTHORS
+</span><span>index af90aaba3..a83cea075 100644
+</span><span>--- a/package/AUTHORS
+</span><span>+++ b/package/AUTHORS
+</span><span>@@ -138,6 +138,7 @@ Chronological list of authors
+</span><span>   - Yuxuan Zhuang
+</span><span>   - Abhishek Shandilya
+</span><span>   - Morgan L. Nance
+</span><span>+  - Faraaz Shah    
+</span></code></pre>
+<p>From the last line here, we were able to quickly confirm their identity, with particular emphasis on the way they chose to share it.</p>
+
+          </div>
+        </article>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Search</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field mb-2">
+          <div class="control">
+            <input class="input" id="search" placeholder="Search this website." type="search" />
+          </div>
+        </div>
+        <div class="search-results">
+          <div class="search-results__items"></div>
+        </div>
+      </section>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+
+
+
+  
+  <footer class="footer py-4">
+    <div class="content has-text-centered">
+      <p>
+        Built with
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-code"></i>
+          </span>
+          <span>code</span>
+        </span>
+        and
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-heart"></i>
+          </span>
+          <span>love</span>
+        </span>
+      </p>
+      <p>
+        Powered by
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-power-off"></i>
+          </span>
+          <span>zola</span>
+        </span>
+      </p>
+    </div>
+  </footer>
+  
+
+  
+  
+  
+  
+  <script src="https://ianmkenney.github.io/elasticlunr.min.js"></script>
+  <script src="https://ianmkenney.github.io/search_index.en.js"></script><script src="https://ianmkenney.github.io/js/site.js"></script>
+
+  
+
+
+
+
+
+  
+  
+</body>
+
+</html>

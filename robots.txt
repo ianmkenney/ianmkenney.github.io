@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://ianmkenney.github.io/sitemap.xml

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  <link href='&#x2F;icons&#x2F;site.webmanifest' rel="manifest" />
+  
+  
+  <link color="#5bbad5" href='&#x2F;icons&#x2F;safari-pinned-tab.svg' rel="mask-icon" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-16x16.png' rel="icon" sizes="16x16" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-32x32.png' rel="icon" sizes="32x32" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;apple-touch-icon.png' rel="apple-touch-icon" sizes="180x180" />
+  
+
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.1/css/academicons.min.css" integrity="sha384-FIue+PI4SsI9XfHCz8dBLg33b0c1fMJgNU3X//L26FYbGnlSEfWmNT7zgWc2N9b6" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link href="https://ianmkenney.github.io/deep-thought.css" rel="stylesheet" />
+  
+  
+
+  <title>
+    
+ | Building documentation on Read the Docs for GitHub pull requests
+
+  </title>
+
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" integrity="sha384-jiBVvJ8NGGj5n7kJaiWwWp9AjC+Yh8rhZY3GtAX8yU28azcLgoRo4oukO87g7zDT" crossorigin="anonymous"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+  
+  
+</head>
+
+<body class="has-background-white">
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-5 has-text-weight-bold" href="https:&#x2F;&#x2F;ianmkenney.github.io"></a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;ianmkenney.github.io&#x2F;">
+            Home
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;ianmkenney.github.io&#x2F;posts">
+            Posts
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;ianmkenney.github.io&#x2F;jokes">
+            Quality Jokes
+          </a>
+          
+          
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title">
+            Building documentation on Read the Docs for GitHub pull requests
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="fas fa-user"></i>
+  </span>
+  <span>Ian Kenney published on</span>
+  <span class="icon">
+    <i class="far fa-calendar-alt"></i>
+  </span>
+  <span><time datetime="2023-10-05">October 05, 2023</time></span>
+</span>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="far fa-clock"></i>
+  </span>
+  <span>2 min,</span>
+  <span class="icon">
+    <i class="fas fa-pencil-alt"></i>
+  </span>
+  <span>264 words</span>
+</span>
+
+            </div>
+            <div class="column">
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+            </div>
+          </div>
+          <div class="content mt-2">
+            <p>Even though you may deploy your documentation on services other than Read the Docs (RTD), such as GitHub pages, those services may not offer a convenient way to build documentation for pull requests (PR).</p>
+<p>Building Sphinx documentation on RTD only requires a minimal configuration file as well as an environment file.
+In this case, our RTD configuration file will match the one found in the <a href="https://github.com/MDAnalysis/cookiecutter-mdakit/blob/16e01026b417ef06b9d05a3b60aa39c3cf12dece/readthedocs.yaml">MDAnalysis MDAKit cookiecutter</a>, which also references the mentioned environment file used with conda.
+The contents of the <code>.readthedocs.yaml</code>, which must be in the root of the git repository, are shown below.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>version: 2
+</span><span>
+</span><span>build:
+</span><span>  os: ubuntu-22.04
+</span><span>  tools:
+</span><span>    python: &quot;mambaforge-4.10&quot;
+</span><span>
+</span><span>python:
+</span><span>  install:
+</span><span>    - method: pip
+</span><span>      path: .
+</span><span>
+</span><span>conda:
+</span><span>  environment: docs/requirements.yaml
+</span></code></pre>
+<p>The environment file should look something like the following, lifted from the <a href="https://github.com/MDAnalysis/PathSimAnalysis">PathSimAnalysis</a> MDAKit.</p>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#bf616a;">name</span><span>: </span><span style="color:#a3be8c;">pathsimanalysis-test
+</span><span style="color:#bf616a;">channels</span><span>:
+</span><span>  - </span><span style="color:#a3be8c;">conda-forge
+</span><span>  - </span><span style="color:#a3be8c;">defaults
+</span><span style="color:#bf616a;">dependencies</span><span>:
+</span><span>  </span><span style="color:#65737e;"># Base depends
+</span><span>  - </span><span style="color:#a3be8c;">python
+</span><span>  - </span><span style="color:#a3be8c;">pip
+</span><span>
+</span><span>  </span><span style="color:#65737e;"># MDAnalysis
+</span><span>  - </span><span style="color:#a3be8c;">MDAnalysis
+</span><span>
+</span><span>  </span><span style="color:#65737e;"># Testing
+</span><span>  - </span><span style="color:#a3be8c;">MDAnalysisTests
+</span><span>  - </span><span style="color:#a3be8c;">pytest
+</span><span>  - </span><span style="color:#a3be8c;">pytest-cov
+</span><span>  - </span><span style="color:#a3be8c;">pytest-xdist
+</span><span>  - </span><span style="color:#a3be8c;">codecov
+</span></code></pre>
+<p>Building on a PR can be enabled in the advanced settings in the Read the Docs interface for the project.
+Check the &quot;Build pull requests for this project&quot; box.</p>
+<p>New PRs will trigger a RTD build.
+If you have a previously opened PR, you will have to push to the branch again to trigger the build.
+The least intrusive way to do this without editing any files is by adding an empty commit.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">git</span><span> commit</span><span style="color:#bf616a;"> --allow-empty -m </span><span>&quot;</span><span style="color:#a3be8c;">Trigger RTD</span><span>&quot;
+</span><span style="color:#bf616a;">git</span><span> push origin rtd_pr_build
+</span></code></pre>
+<p>If everything was done correctly, your PRs should have their docs built automatically on RTD.</p>
+
+          </div>
+        </article>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Search</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field mb-2">
+          <div class="control">
+            <input class="input" id="search" placeholder="Search this website." type="search" />
+          </div>
+        </div>
+        <div class="search-results">
+          <div class="search-results__items"></div>
+        </div>
+      </section>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+
+
+
+  
+  <footer class="footer py-4">
+    <div class="content has-text-centered">
+      <p>
+        Built with
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-code"></i>
+          </span>
+          <span>code</span>
+        </span>
+        and
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-heart"></i>
+          </span>
+          <span>love</span>
+        </span>
+      </p>
+      <p>
+        Powered by
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-power-off"></i>
+          </span>
+          <span>zola</span>
+        </span>
+      </p>
+    </div>
+  </footer>
+  
+
+  
+  
+  
+  
+  <script src="https://ianmkenney.github.io/elasticlunr.min.js"></script>
+  <script src="https://ianmkenney.github.io/search_index.en.js"></script><script src="https://ianmkenney.github.io/js/site.js"></script>
+
+  
+
+
+
+
+
+  
+  
+</body>
+
+</html>

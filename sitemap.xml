@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://ianmkenney.github.io/</loc>
+    </url>
+    <url>
+        <loc>https://ianmkenney.github.io/posts/</loc>
+    </url>
+    <url>
+        <loc>https://ianmkenney.github.io/posts/extracting-authorship/</loc>
+        <lastmod>2023-08-03</lastmod>
+    </url>
+    <url>
+        <loc>https://ianmkenney.github.io/posts/mda-themeing/</loc>
+        <lastmod>2023-07-28</lastmod>
+    </url>
+    <url>
+        <loc>https://ianmkenney.github.io/posts/rtd-pr-builds/</loc>
+        <lastmod>2023-10-05</lastmod>
+    </url>
+</urlset>
