@@ -7,7 +7,7 @@ When moving code from one project to another, original authorship and attributio
 Fortunately, if you're using [git][git], this information travels with the repository and anyone who had a part in publishing code is identifiable.
 In this post, we are concerned with identifying the authors who were involved with the [ENCORE][encore] analysis module in MDAnalysis and giving proper attribution in the new [mdaencore][mdaencore] MDAKit `AUTHOR.md`.
 
-While GitHub *does* show the historical information we want, this takes is much easier accomplished on the command line with a local copy of the repository.
+While GitHub *does* show the historical information we want, this is much easier accomplished on the command line with a local copy of the repository.
 From within the original code base, at the same level as the `encore` analysis module, we can run the [`git log`](https://git-scm.com/docs/git-log) command
 ```bash
 $ git log --pretty="%an <%ae>|%ai" encore/ \
