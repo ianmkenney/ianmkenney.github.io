@@ -1,7 +1,8 @@
-+++
-title = "Extracting authorship from a git repository"
-date = "2023-08-03"
-+++
+---
+title: Extracting authorship from a git repository
+author: Ian Kenney
+date: 2023-08-03
+---
 
 When moving code from one project to another, original authorship and attribution is easily lost in the process.
 Fortunately, if you're using [git][git], this information travels with the repository and anyone who had a part in publishing code is identifiable.

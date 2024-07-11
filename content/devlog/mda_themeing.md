@@ -1,8 +1,8 @@
-+++
-title = "MDAnalysis Sphinx documentation style for MDAKits"
-date = "2023-07-28"
-description = "Sphinx documentation style instructions for MDAnalysis projects"
-+++
+---
+title: "MDAnalysis Sphinx documentation style for MDAKits"
+date: "2023-07-28"
+description: "Sphinx documentation style instructions for MDAnalysis projects"
+---
 
 With the planned expansion of the [MDAKits](https://mdakits.mdanalysis.org) framework, there is a greater need for instructions on deploying documentation with the [MDAnalysis](https://mdanalysis.org) style.
 Currently, there is no installable theme and all configurations will be handled manually.
