@@ -1,7 +1,7 @@
-+++
-title = "Building documentation on Read the Docs for GitHub pull requests"
-date = "2023-10-05"
-+++
+---
+title: "Building documentation on Read the Docs for GitHub pull requests"
+date: "2023-10-05"
+---
 
 Even though you may deploy your documentation on services other than Read the Docs (RTD), such as GitHub pages, those services may not offer a convenient way to build documentation for pull requests (PR).
 
