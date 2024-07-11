@@ -1,3 +1,7 @@
+baseURL: https://ianmkenney.github.io
+languageCode: en-us
+title: Ian M Kenney
+
 module:
   imports:
     - path: github.com/imfing/hextra
@@ -7,21 +11,15 @@ menu:
     - name: Devlog
       pageRef: /devlog
       weight: 1
-    # - name: About
-    #   pageRef: /about
-    #   weight: 2
-    # - name: Guides
-    #   pageRef: /guides
-    #   weight: 3
     - name: Projects
       pageRef: /projects
-      weight: 4
+      weight: 2
     - name: Search
-      weight: 5
+      weight: 3
       params:
         type: search
     - name: GitHub
-      weight: 6
+      weight: 4
       url: "https://github.com/ianmkenney"
       params:
         icon: github

@@ -1,7 +1,6 @@
 ---
 title: ""
 date: 2024-07-10T14:31:29-07:00
-draft: true
 ---
 
 # Ian Kenney's Devlog
