@@ -71,20 +71,20 @@ remove_patterns = ["string2", "string3"]
 remove_task_restart_policy_patterns(scoped_key, remove_patterns)
 ```
 
-## Internal database representation
+## Database representation
 
 This feature introduces a couple of new data representations into the Neo4j database:
 
 1. `TaskRestartPatterns`
-2. `TaskHistory`
+2. `Traceback`
 
 `TaskRestartPatterns`s attach directly to a `TaskHub` with the `ENFORCES` relationship as well as all `Task`s `ACTIONED` by that `TaskHub`.
 This node only contains the policy strings and their number of allowed restarts.
 The `APPLIES` relationship between the `TaskRestartPattern`'s and the individual `Task`s keeps track of the number of times the `Task` has been restarted since it was last `ACTIONED` on the `TaskHub`.
 
 In order to make decisions on whether to de-action a `Task` or set it back to waiting, efficient retrieval of the latest `Task` error traceback is needed.
-Instead of only storing this information in the `Task`'s `ProtocolDAGResult`, we use a `TaskHistory` node to hold a copy of **all** tracebacks that the `Task` has every returned after an error, making it an append-only data structure.
-When a `ComputeService` sends back data from a failed `Task`, the traceback of the error is added to the `TaskHistory` and the status of the `Task` is then set to `error`.
+Instead of only storing this information in the `Task`'s `ProtocolDAGResult`, we add a `Traceback` node that `DETAILS` the `ProtocolDAGResultRef` associated with the returned error.
+When a `ComputeService` sends back data from a failed `Task`, the traceback of the error is added to the `Traceback` node and the status of the `Task` is then set to `error`.
 
 Below is an example of two `Task`s `ACTIONED` on two `TaskHub`s, each with their own `TaskRestartPattern`s.
 
@@ -97,13 +97,11 @@ graph LR;
   TRP3["TaskRestartPattern3(max_retries: int)"]-- ENFORCES -->TH
   TRP3-- APPLIES(num_retries: int) -->T
   TH-- ACTIONS -->T
-  THist[TaskHistory1]-- RECORDS -->T
   OTH[TaskHub2]-- ACTIONS -->T
   TRP4["TaskRestartPattern4(max_retries: int)"]-- ENFORCES -->OTH
   TRP4-- APPLIES(num_retries: int) -->T
   TRP4-- APPLIES(num_retries: int) -->T2[Task2]
   OTH-- ACTIONS -->T2
-  TH2[TaskHistory2]-- RECORDS -->T2
 ```
 
 
@@ -122,7 +120,24 @@ In all cases where an `APPLIES` relationship is created between a `TaskRestartPa
 Changing the status of a `Task` from "error" to anything other than "waiting" also requires that the `APPLIES` relationship is deleted.
 {{< /callout >}}
 
+### `Traceback` implementation
 
+The `Traceback` implementation produces the following topology:
+
+```mermaid
+graph LR;
+  task[Task]-- RESULTS_IN -->pdrr1
+  task-- RESULTS_IN -->pdrr2
+  task-- RESULTS_IN -->pdrr3
+  task-- RESULTS_IN -->pdrr4
+  tb1[Traceback1]-- DETAILS -->pdrr1[ProtocolDAGResultRef1]
+  tb2[Traceback2]-- DETAILS -->pdrr2[ProtocolDAGResultRef2]
+  tb3[Traceback3]-- DETAILS -->pdrr3[ProtocolDAGResultRef3]
+  tb4[Traceback4]-- DETAILS -->pdrr4[ProtocolDAGResultRef4]
+```
+
+Since `ProtocolDAGResultRef`s contain a creation datetime value, selecting the latest `Traceback` just involves collecting the latest `ProtocolDAGResultRef` and the `Traceback` that `DETAIL`s it.
+The `Traceback` node contains a list of strings, which correspond to the failed units in the `Transformation` `Protocol`.
 
 ## Execution of restarts
 
@@ -133,24 +148,24 @@ This is further grouped on each `Task`.
 Taking the image above, the initial query will return:
 
 ```
-(TaskRestartPattern1, TaskHub1, Task1, TaskHistory1)
-(TaskRestartPattern2, TaskHub1, Task1, TaskHistory1)
-(TaskRestartPattern3, TaskHub1, Task1, TaskHistory1)
-(TaskRestartPattern4, TaskHub2, Task1, TaskHistory1)
-(TaskRestartPattern4, TaskHub2, Task2, TaskHistory2)
+(TaskRestartPattern1, TaskHub1, Task1, Traceback1)
+(TaskRestartPattern2, TaskHub1, Task1, Traceback1)
+(TaskRestartPattern3, TaskHub1, Task1, Traceback1)
+(TaskRestartPattern4, TaskHub2, Task1, Traceback1)
+(TaskRestartPattern4, TaskHub2, Task2, Traceback2)
 ```
 
 which is then grouped into
 
 ```
 TaskHub1:
-  (TaskRestartPattern1, Task1, TaskHistory1)
-  (TaskRestartPattern2, Task1, TaskHistory1)
-  (TaskRestartPattern3, Task1, TaskHistory1)
+  (TaskRestartPattern1, Task1, Traceback1)
+  (TaskRestartPattern2, Task1, Traceback1)
+  (TaskRestartPattern3, Task1, Traceback1)
 
 TaskHub2:
-  (TaskRestartPattern4, Task1, TaskHistory1)
-  (TaskRestartPattern4, Task2, TaskHistory2)
+  (TaskRestartPattern4, Task1, Traceback1)
+  (TaskRestartPattern4, Task2, Traceback2)
 ```
 
 which is further refined into
@@ -158,18 +173,18 @@ which is further refined into
 ```
 TaskHub1:
   Task1:
-    (TaskRestartPattern1, TaskHistory1)
-    (TaskRestartPattern2, TaskHistory1)
-    (TaskRestartPattern3, TaskHistory1)
+    (TaskRestartPattern1, Traceback1)
+    (TaskRestartPattern2, Traceback1)
+    (TaskRestartPattern3, Traceback1)
 
 TaskHub2:
   Task1:
-    (TaskRestartPattern4, TaskHistory1)
+    (TaskRestartPattern4, Traceback1)
   Task2:
-    (TaskRestartPattern4, TaskHistory2)
+    (TaskRestartPattern4, Traceback2)
 ```
 
-For each of these groups, all of the patterns are compared to the last entry in the `TaskHistory`'s log.
+For each of these groups, all of the patterns are compared to the last `Traceback`.
 Those that do not match are filtered out.
 Of the remaining matches, the `num_retries` value contained in the `APPLIES` relationship is incremented and compared to the `max_retries` value in it corresponding `TaskRestartPattern` node.
 If any of these `num_retries` are larger than or equal to the `max_retries` (or there are no matches at all), the `Task` is de-actioned from the corresponding `TaskHub`, which also removes the `APPLIES` relationships between that `Task` and the `TaskHub`s associated `TaskRestartPattern`s.
