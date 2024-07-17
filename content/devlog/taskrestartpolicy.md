@@ -141,53 +141,23 @@ The `Traceback` node contains a list of strings, which correspond to the failed 
 
 ## Execution of restarts
 
-Like the rest of the `alchemiscale` architecture, the restarting of `Task`s will be handled by a dedicated `TaskRestartService`.
-The only purpose of this service is to periodically nudge the API server to run the `alchemiscale.storage.statestore.Neo4jStore.tasks_resolve_restarts` method.
-During the execution of this method, all pairs of `TaskRestartPattern` and the `Task`s that they have an `APPLIES` relationship with are collected and grouped according to their `TaskHub`s.
-This is further grouped on each `Task`.
-Taking the image above, the initial query will return:
-
-```
-(TaskRestartPattern1, TaskHub1, Task1, Traceback1)
-(TaskRestartPattern2, TaskHub1, Task1, Traceback1)
-(TaskRestartPattern3, TaskHub1, Task1, Traceback1)
-(TaskRestartPattern4, TaskHub2, Task1, Traceback1)
-(TaskRestartPattern4, TaskHub2, Task2, Traceback2)
-```
-
-which is then grouped into
+Once a `ComputeService` returns an error for a given `Task`, all of the `TaskHubs` that `ACTION` that `Task` are collected along with their `TaskRestartPattern`s.
+These data are group as follows, imagining that `Task1` from the above graph returned an error:
 
 ```
 TaskHub1:
-  (TaskRestartPattern1, Task1, Traceback1)
-  (TaskRestartPattern2, Task1, Traceback1)
-  (TaskRestartPattern3, Task1, Traceback1)
-
-TaskHub2:
-  (TaskRestartPattern4, Task1, Traceback1)
-  (TaskRestartPattern4, Task2, Traceback2)
-```
-
-which is further refined into
-
-```
-TaskHub1:
-  Task1:
     (TaskRestartPattern1, Traceback1)
     (TaskRestartPattern2, Traceback1)
     (TaskRestartPattern3, Traceback1)
 
 TaskHub2:
-  Task1:
     (TaskRestartPattern4, Traceback1)
-  Task2:
-    (TaskRestartPattern4, Traceback2)
 ```
 
-For each of these groups, all of the patterns are compared to the last `Traceback`.
+For each of these groups, all of the patterns are compared to the `Traceback`.
 Those that do not match are filtered out.
 Of the remaining matches, the `num_retries` value contained in the `APPLIES` relationship is incremented and compared to the `max_retries` value in it corresponding `TaskRestartPattern` node.
-If any of these `num_retries` are larger than or equal to the `max_retries` (or there are no matches at all), the `Task` is de-actioned from the corresponding `TaskHub`, which also removes the `APPLIES` relationships between that `Task` and the `TaskHub`s associated `TaskRestartPattern`s.
+If any of these `num_retries` are larger than or equal to the `max_retries` (or there are no matches at all), the `Task` is de-actioned from the corresponding `TaskHub`, which also removes the `APPLIES` relationships between the `Task` and the `TaskHub`'s associated `TaskRestartPattern`s.
 If all `num_retries` are less than the `max_retries`, the `Task` status will be switched to "waiting" once all other `TaskHub`s have been looped over and potentially de-actioned.
 
 
