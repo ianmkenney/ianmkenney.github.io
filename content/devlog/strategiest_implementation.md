@@ -5,20 +5,20 @@ date: 2024-08-26
 description: A design for strategies in Alchemiscale
 draft: true
 ---
-	
+
 ## Introduction
 
 In its current state, execution of Tasks performing Transformations in alchemiscale requires user to manually create any number of Tasks for each transformation of interest and action those Tasks through a TaskHub (AlchemicalNetwork).
 For smaller networks, this is manageable.
 However, as compute pools increase and networks grow, the need for automation is apparent.
-Here we propose the implementation of strategies, which can spawn and action Tasks in an AlchemicalNetwork.
+Here we propose the implementation of strategies, which can spawn and action Tasks for an AlchemicalNetwork.
 
 ## Feature description
 
-In introduction of Strategies will include the implemention of the Strategist service in alchemiscale, which will be responsible for executing Strategies associated with a given AlchemicalNetwork in the Neo4j database.
+In introduction of Strategies will include the implementation of the Strategist service in alchemiscale, which will be responsible for executing Strategies associated with a given AlchemicalNetwork in the Neo4j database.
 Strategies will take as arguments an AlchemicalNetwork along with current transformation free energy differences.
 The output will be a StrategyResult object, a GufeTokenizable whose attributes reflect aspects of the Strategy's proposition.
-The core Strategy structure will be implemented as a base class along with a derived class for the [Network Binding Free Energy (NetBFE)](https://pubs.acs.org/doi/10.1021/acs.jctc.1c00703) method, which aims to optimially allocate resources to the binding free energy calculations in the network.
+The core Strategy structure will be implemented as a base class along with a derived class for the [Network Binding Free Energy (NetBFE)](https://pubs.acs.org/doi/10.1021/acs.jctc.1c00703) method, which aims to optimally allocate resources to the binding free energy calculations in the network.
 The Strategist will use the output of a Strategy to create and action new Tasks for its associated AlchemicalNetwork, taking into consideration the current set of Tasks as well as their statuses.
 
 ```python
