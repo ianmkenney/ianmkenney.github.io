@@ -15,7 +15,7 @@ Here we propose the implementation of strategies, which can spawn and action Tas
 
 ## Feature description
 
-In introduction of Strategies will include the implementation of the Strategist service in alchemiscale, which will be responsible for executing Strategies associated with a given AlchemicalNetwork in the Neo4j database.
+An introduction of Strategies will include the implementation of the Strategist service in alchemiscale, which will be responsible for executing Strategies associated with a given AlchemicalNetwork in the Neo4j database.
 Strategies will take as arguments an AlchemicalNetwork along with current transformation free energy differences.
 The output will be a StrategyResult object, a GufeTokenizable whose attributes reflect aspects of the Strategy's proposition.
 The core Strategy structure will be implemented as a base class along with a derived class for the [Network Binding Free Energy (NetBFE)](https://pubs.acs.org/doi/10.1021/acs.jctc.1c00703) method, which aims to optimally allocate resources to the binding free energy calculations in the network.
