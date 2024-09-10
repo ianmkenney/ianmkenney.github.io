@@ -41,6 +41,43 @@ from alchemistrategies import NetBFE
 
 ## Design considerations
 
+### Strategies
+
+Strategies are opinionated in terms of their inputs and outputs as they need to be predictable and deterministic.
+
+#### Representation in alchemiscale
+
+Strategies are connected to `TaskHub`s with the `PROPOSES` relationship.
+The Strategy node is a `GufeTokenizable` with a string indicating the identity of the strategy, which will be specified in a strategy registry, along with settings that are specific to that Strategy.
+When adding Strategies to `TaskHub`s this registry is checked and will return an error if the specified strategy could not be found.
+An example of a registry could be:
+
+```python
+registry = {
+	"NetBFE": ("alchemistrategies", "NetBFE"),
+	"IansStrategy": ("ianstools.strategies", "IansStrategy"),
+	...
+}
+```
+
+where the classes can be dynamically loaded.
+
+```python
+from importlib import import_module
+
+target_strategy = "NetBFE"
+
+try:
+	strategy_class = getattr(*registry[strategy])
+except ImportError as e:
+	...
+```
+
+<!-- TODO: Does this present a security risk? I suspect no more than importing any other package we don't know. -->
+Only one strategy can be associated with a TaskHub. 
+
+### Strategiest service
+
 With the expected addition of [Task restart policies](../taskrestartpolicy), care needs to be taken so that no feedback loops appear as a result of the Strategist service which could waste time, compute, and money.
 To combat this, we can declare some simple restrictions on how the Strategist updates the database.
 
@@ -52,7 +89,6 @@ The strategist service:
     - For example, if the Strategy states that three Tasks should be run for Transformation-X, but two Tasks are already waiting, only one new Task will be created and actioned.
 1. may action Tasks that are waiting, but not actioned.
 
-
 ## Implementation plan
 
 This feature requires we implement both the core Strategy structure and the Strategist service.
@@ -61,9 +97,8 @@ The service, being specific to alchemiscale will be developed in the [alchemisca
 Since the inputs and outputs of a Strategy are straightforward, these two efforts can be developed mostly in parallel with the Strategy library (namely the initial implementation of NetBFE) being a bottleneck for testing in alchemiscale.
 
 
+
 ## Testing
-
-
 
 ## Documentation
 
