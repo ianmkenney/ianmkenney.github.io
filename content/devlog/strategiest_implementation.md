@@ -1,5 +1,5 @@
 ---
-title: Alchemiscale stategies proposal
+title: Alchemiscale strategies proposal
 author: Ian Kenney
 date: 2024-08-26
 description: A design for strategies in Alchemiscale
