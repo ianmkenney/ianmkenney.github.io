@@ -17,7 +17,7 @@ Here we propose the implementation of strategies, which can spawn and action Tas
 
 An introduction of Strategies will include the implementation of the Strategist service in alchemiscale, which will be responsible for executing Strategies associated with a given AlchemicalNetwork in the Neo4j database.
 Strategies will take as arguments an AlchemicalNetwork along with current transformation free energy differences.
-The output will be a StrategyResult object, a GufeTokenizable whose attributes reflect aspects of the Strategy's proposition.
+The output will be a StrategyResult object, a GufeTokenizable whose attributes reflect aspects of the Strategy's proposal.
 The core Strategy structure will be implemented as a base class along with a derived class for the [Network Binding Free Energy (NetBFE)](https://pubs.acs.org/doi/10.1021/acs.jctc.1c00703) method, which aims to optimally allocate resources to the binding free energy calculations in the network.
 The Strategist will use the output of a Strategy to create and action new Tasks for its associated AlchemicalNetwork, taking into consideration the current set of Tasks as well as their statuses.
 
@@ -73,10 +73,9 @@ except ImportError as e:
 	...
 ```
 
-<!-- TODO: Does this present a security risk? I suspect no more than importing any other package we don't know. -->
 Only one strategy can be associated with a TaskHub. 
 
-### Strategiest service
+### Strategist service
 
 With the expected addition of [Task restart policies](../taskrestartpolicy), care needs to be taken so that no feedback loops appear as a result of the Strategist service which could waste time, compute, and money.
 To combat this, we can declare some simple restrictions on how the Strategist updates the database.
@@ -96,10 +95,18 @@ The service, being specific to alchemiscale will be developed in the [alchemisca
 
 Since the inputs and outputs of a Strategy are straightforward, these two efforts can be developed mostly in parallel with the Strategy library (namely the initial implementation of NetBFE) being a bottleneck for testing in alchemiscale.
 
-
-
 ## Testing
+
+### Strategies
+
+Tests will be provided for the abstract method and basic derived classes.
+We will test proposed predictions on the tyk2 alchemical network, similar to the one found within the alchemiscale testing module.
+
+Varying connectivities need to be considered while testing.
+
+### Alchemiscale strategist
 
 ## Documentation
 
-
+A new documentation site will be deployed for the strategies package.
+This will include API documentations as well as a basic user guide.
