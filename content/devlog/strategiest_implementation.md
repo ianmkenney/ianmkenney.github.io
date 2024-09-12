@@ -48,32 +48,9 @@ Strategies are opinionated in terms of their inputs and outputs as they need to 
 #### Representation in alchemiscale
 
 Strategies are connected to `TaskHub`s with the `PROPOSES` relationship.
-The Strategy node is a `GufeTokenizable` with a string indicating the identity of the strategy, which will be specified in a strategy registry, along with settings that are specific to that Strategy.
-When adding Strategies to `TaskHub`s this registry is checked and will return an error if the specified strategy could not be found.
-An example of a registry could be:
-
-```python
-registry = {
-	"NetBFE": ("alchemistrategies", "NetBFE"),
-	"IansStrategy": ("ianstools.strategies", "IansStrategy"),
-	...
-}
-```
-
-where the classes can be dynamically loaded.
-
-```python
-from importlib import import_module
-
-target_strategy = "NetBFE"
-
-try:
-	strategy_class = getattr(*registry[strategy])
-except ImportError as e:
-	...
-```
-
-Only one strategy can be associated with a TaskHub. 
+The Strategy node is a `GufeTokenizable` that contains settings along with settings that are specific to that Strategy.
+Only one strategy can be associated with a TaskHub.
+The nodes contain all information needed to import the strategy class, which are then stored in the TOKENIZATION_CLASS_REGISTRY.
 
 ### Strategist service
 
