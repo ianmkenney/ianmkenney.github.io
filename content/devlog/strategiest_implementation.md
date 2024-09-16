@@ -16,28 +16,54 @@ Here we propose the implementation of strategies, which can spawn and action Tas
 ## Feature description
 
 An introduction of Strategies will include the implementation of the Strategist service in alchemiscale, which will be responsible for executing Strategies associated with a given AlchemicalNetwork in the Neo4j database.
-Strategies will take as arguments an AlchemicalNetwork along with current transformation free energy differences.
-The output will be a StrategyResult object, a GufeTokenizable whose attributes reflect aspects of the Strategy's proposal.
-The core Strategy structure will be implemented as a base class along with a derived class for the [Network Binding Free Energy (NetBFE)](https://pubs.acs.org/doi/10.1021/acs.jctc.1c00703) method, which aims to optimally allocate resources to the binding free energy calculations in the network.
-The Strategist will use the output of a Strategy to create and action new Tasks for its associated AlchemicalNetwork, taking into consideration the current set of Tasks as well as their statuses.
+The `Strategy`s themselves are implementations of `BaseStrategy`s that will be located in a dedicted library under the OpenFreeEnergy organization.
+`Strategy`s will take as arguments an `AlchemicalNetwork` along with transformation free energy differences.
+The output will be a `StrategyResult` object, a `GufeTokenizable` whose attributes reflect aspects of the `Strategy`'s proposal.
+
+Using a `Strategy` directly (as the alchemiscale server will do) will look something like:
 
 ```python
-# an: AlchemicalNetwork
-# data: dict
-#   will contain relevant information related to the specific strategy
-# settings: MyStrategySettings
-#   setting specific to MyStrategy
+# given an AlchemicalNetwork (an) and transformation data (data)
 
-strat: MyStrategy = MyStrategy(settings)
+	strat: MyStrategy = MyStrategy(settings)
 
 # propose method returns a StrategyResult object
-results: StrategyResult = strat.propose(an, **data)
+results: StrategyResult = strat.propose(an, data)
 weights: dict[GufeKey, float] = results.weights
-
-## user
-
-from alchemistrategies import NetBFE
 ```
+
+Assuming a `Strategy` implementation is installed on both the client and the deployed alchemiscale server, typical usage client-side will look like:
+
+```python
+# with an AlchemicalNetwork (an), AlchemiscaleClient (asc)
+
+from customstrategylibrary import CustomStrategy
+
+settings: CustomStrategySettings = CustomStrategy.default_settings()
+strategy: CustomStrategy = CustomStratrgy(settings)
+
+strategy_scoped_key: ScopedKey = asc.set_network_strategy(an.scoped_key, strategy)
+```
+
+Since `Strategy`s are immutable, any changes to a previously set `Strategy` need to be applied by first clearing the old strategy and re-set the new one.
+
+The first functioning `Strategy` implemented will be take inspiration from the [Network Binding Free Energy (NetBFE)](https://pubs.acs.org/doi/10.1021/acs.jctc.1c00703) method, which aims to optimally allocate resources to the binding free energy calculations in the network.
+
+The Strategist will use the `StrategyResult` to create and action new `Task`s for its associated `AlchemicalNetwork`, taking into consideration the current set of Tasks as well as their statuses.
+
+### New client methods
+
+The following client methods 
+
+- `set_network_strategy`
+- `clear_network_strategy`
+- `get_network_strategy`
+
+### New statestore methods
+
+- `set_taskhub_strategy`
+- `clear_taskhub_strategy`
+- `get_taskhub_strategy`
 
 ## Design considerations
 
@@ -87,3 +113,5 @@ Varying connectivities need to be considered while testing.
 
 A new documentation site will be deployed for the strategies package.
 This will include API documentations as well as a basic user guide.
+
+
