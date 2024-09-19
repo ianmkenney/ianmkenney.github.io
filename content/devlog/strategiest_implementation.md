@@ -92,7 +92,7 @@ The strategist service:
 1. cannot switch the status of a Task from "error" to "waiting".
 1. cannot create any Tasks on a Transformation with associated "errored" Tasks.
 1. must count already existing tasks on the transformation against the count.
-    - For example, if the Strategy states that three Tasks should be run for Transformation-X, but two Tasks are already waiting, only one new Task will be created and actioned.
+    - For example, if the strategist proposes that three Tasks should be run for Transformation-X, but two Tasks are already waiting, only one new Task will be created and actioned.
 1. may action Tasks that are waiting
 
 ## Implementation plan
